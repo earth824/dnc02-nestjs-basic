@@ -21,3 +21,20 @@ export class AuthController {
     return 'Access token';
   }
 }
+
+// PLAIN JS OBJECT
+const a = {
+  email: 'a@mail.com',
+  password: '123456',
+};
+
+class User {
+  email: string;
+  password: string;
+
+  constructor(e: string, p: string) {
+    this.email = e;
+    this.password = p;
+  }
+}
+const b = new User('a@mail.com', '123456');

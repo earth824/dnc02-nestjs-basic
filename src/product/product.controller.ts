@@ -1,4 +1,15 @@
-import { Controller, Delete, Get, Param, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  NotAcceptableException,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
 
 @Controller('/products')
@@ -11,9 +22,24 @@ export class ProductController {
     return query;
   }
 
+  @Post()
+  createProduct(@Body() body: unknown) {}
+
   @Delete(':id')
-  deleteProduct(@Param() param: unknown, @Param('id') productId: string) {
-    console.log(param);
+  deleteProduct(
+    @Param() param: unknown,
+    // @Param('id', ParseIntPipe) productId: number,
+    @Param(
+      'id',
+      new ParseIntPipe({
+        exceptionFactory() {
+          throw new NotAcceptableException('Param: ID must be an integer');
+        },
+      }),
+    )
+    productId: number,
+  ) {
+    console.log(typeof productId);
     return productId;
   }
 }
