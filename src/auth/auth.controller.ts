@@ -1,6 +1,15 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 
+// @UsePipes(ValidationPipe)
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -22,19 +31,20 @@ export class AuthController {
   }
 }
 
-// PLAIN JS OBJECT
-const a = {
-  email: 'a@mail.com',
-  password: '123456',
-};
+// // PLAIN JS OBJECT
+// const a = {
+//   email: 'a@mail.com',
+//   password: '123456',
+// };
 
-class User {
-  email: string;
-  password: string;
+// class User {
+//   email: string;
+//   password: string;
 
-  constructor(e: string, p: string) {
-    this.email = e;
-    this.password = p;
-  }
-}
-const b = new User('a@mail.com', '123456');
+//   constructor(e: string, p: string) {
+//     this.email = e;
+//     this.password = p;
+//   }
+// }
+// // INSTANCE OF USER
+// const b = new User('a@mail.com', '123456');

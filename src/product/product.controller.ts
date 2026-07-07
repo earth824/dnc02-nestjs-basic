@@ -8,10 +8,16 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
   Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
+import { CreateProductDto } from './dtos/create-product.dto';
+import { UpdateProductDto } from './dtos/update-product.dto';
 
+// @UsePipes(ValidationPipe)
 @Controller('/products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
@@ -22,8 +28,18 @@ export class ProductController {
     return query;
   }
 
+  // @UsePipes(ValidationPipe) // APPLY PIPE at METHOD LEVEL
   @Post()
-  createProduct(@Body() body: unknown) {}
+  createProduct(@Body() createProductDto: CreateProductDto) {
+    console.log(createProductDto);
+  }
+
+  // @UsePipes(ValidationPipe) // APPLY PIPE at METHOD LEVEL
+  @Put(':id')
+  updateProduct(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateProductDto: UpdateProductDto,
+  ) {}
 
   @Delete(':id')
   deleteProduct(
@@ -34,6 +50,7 @@ export class ProductController {
       new ParseIntPipe({
         exceptionFactory() {
           throw new NotAcceptableException('Param: ID must be an integer');
+          // throw new Error('ABCD');
         },
       }),
     )
