@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { validate } from './config/env.validate';
+import databaseConfig from './config/database.config';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { validate } from './config/env.validate';
     ConfigModule.forRoot({
       isGlobal: true,
       validate,
+      load: [databaseConfig],
     }),
   ],
 })
