@@ -31,7 +31,8 @@ export class ProductController {
   // @UsePipes(ValidationPipe) // APPLY PIPE at METHOD LEVEL
   @Post()
   async createProduct(@Body() createProductDto: CreateProductDto) {
-    await this.productService.createProduct(createProductDto);
+    const product = await this.productService.createProduct(createProductDto);
+    return { product };
   }
 
   // @UsePipes(ValidationPipe) // APPLY PIPE at METHOD LEVEL

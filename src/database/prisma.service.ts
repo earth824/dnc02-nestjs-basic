@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from './generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
+import { ConfigService } from '@nestjs/config';
+import { EnvVariable } from '../config/env.validate';
 
 @Injectable()
 export class PrismaService extends PrismaClient {
-  constructor() {
+  constructor(
+    private readonly configService: ConfigService<EnvVariable, true>,
+  ) {
     const adapter = new PrismaPg({
-      connectionString:
-        'postgres://postgres:123456@localhost:5432/dnc02_nestjs_basic',
+      connectionString: configService.get('DATABASE_URL', { infer: true }),
     });
     super({ adapter });
   }
